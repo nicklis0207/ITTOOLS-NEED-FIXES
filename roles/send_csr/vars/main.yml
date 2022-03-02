@@ -1,0 +1,6 @@
+---
+# vars file for grant_cert
+#
+key_path: /etc/pki/tls/private/{{ ansible_hostname }}.key
+
+request_path: /etc/pki/tls/private/{{ ansible_hostname }}.csr

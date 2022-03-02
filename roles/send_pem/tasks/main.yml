@@ -1,0 +1,20 @@
+---
+# tasks file for send_pem
+#
+- name: Copy All Remotehosts pem files To HAProxy servers
+  copy:
+    src: /etc/ansible/remote_pem/{{ item }}.pem
+    dest: /etc/pki/tls/certs/{{ item }}.pem
+  loop:
+    - cats_food
+    - big_head
+
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+
+- name: Restart Haproxy
+  service:
+    name: haproxy
+    state: restarted

@@ -1,0 +1,46 @@
+---
+
+- name: Set the /etc/hosts
+  hosts: all
+  roles:
+    - dns
+
+- name: Webservers Part
+  hosts: apache_webservers
+  roles:
+    - apache
+
+- name: Haproxy Part
+  hosts: haproxy_servers
+  roles:
+    - haproxy
+
+- name: Keepalived Part
+  hosts: haproxy_servers
+  roles:
+    - keepalived
+
+- name: Send Certificate Requests to controller
+  hosts: apache_webservers, haproxy_servers
+  roles:
+    - send_csr
+
+- name: CA Certificate Part
+  hosts: ca
+  roles:
+    - ssl
+
+- name: Grant Certificates to hosts
+  hosts: ca
+  roles:
+    - grant_cert 
+
+- name: Copy finished Certificates to remote hosts
+  hosts: apache_webservers, haproxy_servers
+  roles:
+    - insert_cert
+
+- name: Haproxy Part
+  hosts: haproxy_servers
+  roles:
+    - send_pem

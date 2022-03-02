@@ -1,0 +1,28 @@
+---
+# vars file for haproxy
+#
+
+remote_pem_file_path: /etc/pki/tls/certs/
+
+listen_port: 80
+
+ssl_listen_port: 443
+
+cats_food_ip: 192.168.100.2
+
+big_head_ip: 192.168.100.3
+
+cats_food_hostname: 'cats_food'
+
+big_head_hostname: 'big_head'
+
+rsyslog_regex: |
+
+  # FOR THE ITTOOLS EXERCISE: \n
+  # Provides UDP syslog reception \n
+  $ModLoad imudp 
+  $UDPServerRun 514 
+  
+  # HAProxy Logging 
+  local2.*        /var/log/haproxy.log 
+

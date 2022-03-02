@@ -1,0 +1,8 @@
+---
+# tasks file for dns
+#
+- name: Edit the hosts file
+  blockinfile:
+    state: present
+    dest: /etc/hosts
+    content: '{{ hosts_content }}'

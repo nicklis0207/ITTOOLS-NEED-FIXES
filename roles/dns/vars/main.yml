@@ -1,0 +1,14 @@
+---
+# vars file for dns
+
+hosts_content: |
+ 192.168.100.1 ansible_master.thepooh.com ansible_master
+ 192.168.100.2 cats_food.thepooh.com cats_food
+ 192.168.100.3 big_head.thepooh.com big_head
+ #192.168.100.4 ha1.thepooh.com ha1
+ #192.168.100.5 ha2.thepooh.com ha2
+ 192.168.100.4 cats_food.com
+ 192.168.100.5 big_head.com
+ #192.168.100.45 cats_food.com
+ #192.168.100.45 big_head.com
+ 192.168.100.6 ca_server.thepooh.com ca_server

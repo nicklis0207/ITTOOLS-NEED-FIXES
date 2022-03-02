@@ -1,0 +1,13 @@
+
+---
+# handlers file for haproxy
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+
+#- name: Restart rsyslog
+#  shell: systemctl restart rsyslog.service
+#  service:
+#    name: rsyslog
+#    state: restarted

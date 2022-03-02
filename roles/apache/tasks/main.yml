@@ -1,0 +1,44 @@
+---
+- name: Installing Latest version of Apache
+  yum: 
+    name: httpd 
+    state: present
+
+- name: Start Firewalld Service
+  shell: systemctl start firewalld
+
+- name: permit traffic in default zone for some services
+  firewalld:
+    service: '{{ item }}'
+    permanent: yes
+    state: enabled
+  loop:
+    - http
+    - https
+  notify: Restart firewalld
+
+- name: Set color variable when cats_food
+  set_fact:
+    color: "MistyRose"
+  when: ansible_hostname == "cats_food"
+
+- name: Set color variable when big_head
+  set_fact:
+    color: "SeaGreen"
+  when: ansible_hostname == "big_head"
+
+- name: Copying the demo file
+  template: 
+    src: /etc/ansible/roles/apache/templates/index_jinja.j2
+    dest: /var/www/html/index.html
+    owner: apache 
+    group: apache 
+    mode: 0644
+
+- name: (Enable it on System Boot)
+  service: 
+    name: httpd 
+    enabled: yes
+  notify: Restart apache
+
+

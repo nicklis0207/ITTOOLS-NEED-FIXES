@@ -1,0 +1,7 @@
+---
+# vars file for keepalived
+#
+
+keepalived_vip: 192.168.100.45
+
+keepalived_interface: eth1

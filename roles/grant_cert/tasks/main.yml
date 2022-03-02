@@ -1,0 +1,34 @@
+---
+# tasks file for grant_cert
+#
+- name: Ensure directory exists
+  file:
+    path: /etc/pki/remote_crt
+    state: directory
+    mode: 0775
+
+- name: Generate a Certificate to all remote hosts
+  openssl_certificate:
+    path: "{{ remote_cert_path }}"                #the path of the future cerificates in the CA server
+#    privatekey_path: "{{ key_path }}"      
+    ownca_privatekey_passphrase: vagrant
+    csr_path: "{{ remote_request_path }}"
+    provider: ownca
+    ownca_path: "{{ CA_cert_path }}"              #the path of the CA root cerificate
+    ownca_privatekey_path: "{{ key_path }}"
+  loop:
+    - big_head
+    - cats_food
+    - ha1
+    - ha2
+
+- name: Fetch the Certificates from CA server to ansible master
+  fetch:
+    src: "{{ remote_cert_path }}"
+    dest: /etc/ansible/remote_crt/{{ item }}/
+    flat: yes
+  loop:
+    - big_head
+    - cats_food
+    - ha1
+    - ha2
